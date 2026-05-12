@@ -255,16 +255,78 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ===== Contact form submission =====
+// ===== Contact form submission (EmailJS) =====
+// Setup instructions:
+// 1. Create a free account at https://www.emailjs.com
+// 2. Add an email service (connect your email provider)
+// 3. Create two email templates:
+//    - "contact_notification": sends form data to thomas@tkdigitalmedia.com
+//      Subject: "New enquiry from {{from_name}}"
+//      Body: includes {{from_name}}, {{from_email}}, {{message}}
+//    - "contact_confirmation": auto-reply to {{from_email}}
+//      Subject: "Thanks for reaching out to TKDigital!"
+//      Body: confirmation message with {{from_name}}
+// 4. Replace the placeholder values below with your actual IDs:
+const EMAILJS_PUBLIC_KEY = 'HXx4oph6308vM8t__';
+const EMAILJS_SERVICE_ID = 'service_vltp3uj';
+const EMAILJS_NOTIFICATION_TEMPLATE_ID = 'template_z8bqqy7';
+const EMAILJS_CONFIRMATION_TEMPLATE_ID = 'template_c9frufn';
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.textContent;
+
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const name = document.getElementById('contact-name').value.trim();
     const email = document.getElementById('contact-email').value.trim();
     const message = document.getElementById('contact-message').value.trim();
-    const subject = encodeURIComponent('New enquiry from ' + name);
-    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-    window.location.href = 'mailto:thomas@tkdigitalmedia.com?subject=' + subject + '&body=' + body;
+
+    // Set loading state
+    submitBtn.disabled = true;
+    submitBtn.classList.add('btn-loading');
+    submitBtn.textContent = 'Sending...';
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      message: message
+    };
+
+    // Send notification email to thomas@tkdigitalmedia.com, then confirmation to sender
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFICATION_TEMPLATE_ID, templateParams)
+      .then(() => {
+        return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONFIRMATION_TEMPLATE_ID, templateParams);
+      })
+      .then(() => {
+        // Success
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.classList.add('btn-success');
+        submitBtn.textContent = 'Message Sent!';
+        contactForm.reset();
+
+        setTimeout(() => {
+          submitBtn.classList.remove('btn-success');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }, 3000);
+      })
+      .catch((error) => {
+        // Error
+        console.error('EmailJS error:', error);
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.classList.add('btn-error');
+        submitBtn.textContent = 'Failed to send — please try again';
+
+        setTimeout(() => {
+          submitBtn.classList.remove('btn-error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }, 4000);
+      });
   });
 }
