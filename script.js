@@ -103,23 +103,23 @@ resizeAmbientCanvas();
 window.addEventListener('resize', resizeAmbientCanvas);
 
 const ambientParticles = [];
-const ambientCount = 25;
+const ambientCount = 85;
 
 for (let i = 0; i < ambientCount; i++) {
   ambientParticles.push({
     x: Math.random() * ambientCanvas.width,
     y: Math.random() * ambientCanvas.height,
-    size: Math.random() * 1.5 + 0.5,
-    speedX: (Math.random() - 0.5) * 0.2,
-    speedY: (Math.random() - 0.5) * 0.15,
-    opacity: Math.random() * 0.15 + 0.05
+    size: Math.random() * 2 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: (Math.random() - 0.5) * 0.4,
+    opacity: Math.random() * 0.4 + 0.1
   });
 }
 
 function drawAmbientParticles() {
   ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
 
-  ambientParticles.forEach(p => {
+  ambientParticles.forEach((p, i) => {
     p.x += p.speedX;
     p.y += p.speedY;
 
@@ -132,17 +132,42 @@ function drawAmbientParticles() {
     ambientCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ambientCtx.fillStyle = `rgba(201, 169, 110, ${p.opacity})`;
     ambientCtx.fill();
+
+    for (let j = i + 1; j < ambientParticles.length; j++) {
+      const dx = p.x - ambientParticles[j].x;
+      const dy = p.y - ambientParticles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < 120) {
+        ambientCtx.beginPath();
+        ambientCtx.moveTo(p.x, p.y);
+        ambientCtx.lineTo(ambientParticles[j].x, ambientParticles[j].y);
+        ambientCtx.strokeStyle = `rgba(201, 169, 110, ${0.08 * (1 - dist / 120)})`;
+        ambientCtx.lineWidth = 0.5;
+        ambientCtx.stroke();
+      }
+    }
   });
 
   requestAnimationFrame(drawAmbientParticles);
 }
 drawAmbientParticles();
 
+// ===== Scroll progress bar =====
+const scrollProgress = document.getElementById('scroll-progress');
+
 // ===== Navbar scroll effect =====
 const navbar = document.getElementById('navbar');
 
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
+  // Progress bar
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  scrollProgress.style.width = scrollPercent + '%';
+
+  // Navbar
+  if (scrollTop > 50) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
