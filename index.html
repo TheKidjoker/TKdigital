@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TKDigital | We Build Websites That Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Raleway:wght@200;300;400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Intro Splash -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div class="intro-logo">
+      <div class="intro-tk-wrapper">
+        <svg class="intro-border" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="112" height="112" rx="16" stroke="url(#intro-grad)" stroke-width="3" />
+          <defs>
+            <linearGradient id="intro-grad" x1="0" y1="0" x2="120" y2="120">
+              <stop offset="0%" stop-color="#c9a96e"/>
+              <stop offset="100%" stop-color="#e8d5b0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="intro-tk" id="intro-tk">TK</div>
+      </div>
+      <span class="intro-digital" id="intro-digital"></span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo"><span class="logo-tk">TK</span><span class="logo-digital">Digital</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Book a Call</a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <canvas class="hero-particles" id="hero-particles"></canvas>
+    <div class="hero-content">
+      <h1>We Build Websites<br />That <span class="highlight">Work For You</span></h1>
+      <p>Custom-built, high-performance websites designed to grow your business. From concept to launch — we handle it all.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Book a Call</a>
+        <a href="#services" class="btn btn-outline">See Services</a>
+      </div>
+    </div>
+    <div class="hero-glow"></div>
+    <a href="#services" class="scroll-indicator" aria-label="Scroll down">
+      <div class="scroll-arrow"></div>
+    </a>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2 class="section-title">What We <span class="highlight">Offer</span></h2>
+      <p class="section-sub">Everything you need to get online and start converting.</p>
+      <div class="services-grid">
+        <a href="#contact" class="service-card">
+          <div class="service-icon">&#9672;</div>
+          <h3>Custom Websites</h3>
+          <p>Hand-coded sites built from scratch. No templates, no bloat — just clean, fast, and tailored to your brand.</p>
+        </a>
+        <a href="#contact" class="service-card">
+          <div class="service-icon">&#9654;</div>
+          <h3>Redesigns</h3>
+          <p>Outdated site? We'll modernize your design, improve performance, and boost your conversions.</p>
+        </a>
+        <a href="#contact" class="service-card">
+          <div class="service-icon">&#9881;</div>
+          <h3>Maintenance</h3>
+          <p>Ongoing support, updates, and hosting management so you can focus on running your business.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="process" id="process">
+    <div class="container">
+      <h2 class="section-title">How It <span class="highlight">Works</span></h2>
+      <p class="section-sub">From first call to final launch — four simple steps.</p>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-number">01</div>
+          <h3>Book a Call</h3>
+          <p>We hop on a quick call to understand your goals, timeline, and vision for your site.</p>
+        </div>
+        <div class="process-connector"></div>
+        <div class="process-step">
+          <div class="step-number">02</div>
+          <h3>We Plan</h3>
+          <p>We map out your sitemap, wireframes, and design direction — all approved by you before we build.</p>
+        </div>
+        <div class="process-connector"></div>
+        <div class="process-step">
+          <div class="step-number">03</div>
+          <h3>We Build</h3>
+          <p>We code your site from scratch, keeping you updated with previews along the way.</p>
+        </div>
+        <div class="process-connector"></div>
+        <div class="process-step">
+          <div class="step-number">04</div>
+          <h3>You Launch</h3>
+          <p>Final review, go live, and we stick around for support if you need us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Why <span class="highlight">TKDigital</span>?</h2>
+        <p>We're not a massive agency with layers of bureaucracy. We're a lean, skilled team that treats every project like it matters — because it does.</p>
+        <ul class="about-list">
+          <li><span class="check">&#10003;</span> Fast turnaround — most sites delivered in 1-2 weeks</li>
+          <li><span class="check">&#10003;</span> Direct communication — no middlemen</li>
+          <li><span class="check">&#10003;</span> Performance-first — every site scores 90+ on PageSpeed</li>
+          <li><span class="check">&#10003;</span> Fair, transparent pricing — no hidden fees</li>
+        </ul>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-number" data-target="100">0</span>%
+          <span class="stat-label">Client Satisfaction</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-target="2">0</span>+
+          <span class="stat-label">Years Experience</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <h2 class="section-title">Our <span class="highlight">Work</span></h2>
+      <p class="section-sub">A few projects we're proud of.</p>
+      <div class="portfolio-grid">
+        <div class="portfolio-card">
+          <div class="portfolio-img img-1">Project 1</div>
+          <div class="portfolio-info">
+            <h3>Brand Website</h3>
+            <p>Full custom build for a lifestyle brand.</p>
+          </div>
+        </div>
+        <div class="portfolio-card">
+          <div class="portfolio-img img-2">Project 2</div>
+          <div class="portfolio-info">
+            <h3>Business Landing Page</h3>
+            <p>High-converting landing page for a local business.</p>
+          </div>
+        </div>
+        <div class="portfolio-card">
+          <div class="portfolio-img img-3">Project 3</div>
+          <div class="portfolio-info">
+            <h3>SaaS Landing Page</h3>
+            <p>High-converting page for a tech startup.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to <span class="highlight">Launch</span> Your Site?</h2>
+        <p>Let's turn your idea into a website that works. Book a free consultation today.</p>
+        <a href="#contact" class="btn btn-primary">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">Let's <span class="highlight">Talk</span></h2>
+      <p class="section-sub">Ready to get started? Book a free consultation below.</p>
+      <div class="cal-embed">
+        <iframe src="https://cal.com/thomas-kelly-0qdadn?theme=dark" frameborder="0" allowfullscreen style="width:100%;height:700px;border:none;border-radius:12px;"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo"><span class="logo-tk">TK</span><span class="logo-digital">Digital</span></a>
+        <p class="footer-tagline">Custom websites that work for you.</p>
+      </div>
+      <div class="footer-nav">
+        <h4>Navigation</h4>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#portfolio">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Get In Touch</h4>
+        <a href="mailto:thomas@tkdigitalmedia.com">thomas@tkdigitalmedia.com</a>
+        <div class="footer-socials">
+          <a href="#" aria-label="Twitter/X">&#120143;</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">&#9741;</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TKDigital. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
