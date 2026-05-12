@@ -91,6 +91,53 @@ function drawParticles() {
 }
 drawParticles();
 
+// ===== Ambient full-page particles =====
+const ambientCanvas = document.getElementById('ambient-particles');
+const ambientCtx = ambientCanvas.getContext('2d');
+
+function resizeAmbientCanvas() {
+  ambientCanvas.width = window.innerWidth;
+  ambientCanvas.height = window.innerHeight;
+}
+resizeAmbientCanvas();
+window.addEventListener('resize', resizeAmbientCanvas);
+
+const ambientParticles = [];
+const ambientCount = 25;
+
+for (let i = 0; i < ambientCount; i++) {
+  ambientParticles.push({
+    x: Math.random() * ambientCanvas.width,
+    y: Math.random() * ambientCanvas.height,
+    size: Math.random() * 1.5 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.2,
+    speedY: (Math.random() - 0.5) * 0.15,
+    opacity: Math.random() * 0.15 + 0.05
+  });
+}
+
+function drawAmbientParticles() {
+  ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
+
+  ambientParticles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if (p.x < 0) p.x = ambientCanvas.width;
+    if (p.x > ambientCanvas.width) p.x = 0;
+    if (p.y < 0) p.y = ambientCanvas.height;
+    if (p.y > ambientCanvas.height) p.y = 0;
+
+    ambientCtx.beginPath();
+    ambientCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ambientCtx.fillStyle = `rgba(201, 169, 110, ${p.opacity})`;
+    ambientCtx.fill();
+  });
+
+  requestAnimationFrame(drawAmbientParticles);
+}
+drawAmbientParticles();
+
 // ===== Navbar scroll effect =====
 const navbar = document.getElementById('navbar');
 
@@ -135,7 +182,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Add fade-in class to animatable elements
 document.querySelectorAll(
-  '.service-card, .about-text, .about-stats, .portfolio-card, .cal-embed, .section-title, .section-sub, .process-step, .cta-content'
+  '.service-card, .about-text, .about-stats, .portfolio-card, .cal-embed, .contact-form, .contact-divider, .section-title, .section-sub, .process-step, .cta-content'
 ).forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
@@ -182,3 +229,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// ===== Contact form submission =====
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+    const subject = encodeURIComponent('New enquiry from ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    window.location.href = 'mailto:thomas@tkdigitalmedia.com?subject=' + subject + '&body=' + body;
+  });
+}
