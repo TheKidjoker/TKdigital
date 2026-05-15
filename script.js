@@ -22,7 +22,7 @@ setTimeout(() => {
         }, 600);
       }, 400);
     }
-  }, 100);
+  }, 150);
 }, 1300); // Start typing after spin completes
 
 // ===== Hero particles =====
@@ -159,6 +159,10 @@ const scrollProgress = document.getElementById('scroll-progress');
 // ===== Navbar scroll effect =====
 const navbar = document.getElementById('navbar');
 
+// ===== Active nav link on scroll =====
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-links a');
+
 window.addEventListener('scroll', () => {
   // Progress bar
   const scrollTop = window.scrollY;
@@ -172,6 +176,22 @@ window.addEventListener('scroll', () => {
   } else {
     navbar.classList.remove('scrolled');
   }
+
+  // Active nav link
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 120;
+    if (scrollTop >= top) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navItems.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
 });
 
 // ===== Mobile menu toggle =====

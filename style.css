@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -111,6 +112,17 @@ a {
 .btn-full {
   width: 100%;
   text-align: center;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+  box-shadow: 0 0 16px var(--glow-purple);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
 }
 
 /* ===== Scroll Progress Bar ===== */
@@ -305,9 +317,15 @@ a {
   transition: all 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--white);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.nav-links a.active {
+  color: var(--purple);
+  text-shadow: 0 0 12px var(--glow-purple);
 }
 
 .nav-cta {
@@ -366,6 +384,7 @@ a {
   text-align: center;
   padding: 120px 24px 80px;
   position: relative;
+  overflow: hidden;
 }
 
 .hero-particles {
@@ -471,7 +490,7 @@ a {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
 
@@ -721,6 +740,11 @@ a {
   font-weight: 700;
   color: var(--white);
   position: relative;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-card:hover .portfolio-img {
+  transform: scale(1.05);
 }
 
 .portfolio-img.img-1 {
@@ -803,6 +827,14 @@ a {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.cal-embed iframe {
+  width: 100%;
+  height: 700px;
+  border: none;
+  border-radius: 12px;
+  display: block;
 }
 
 /* ===== Contact Form ===== */
@@ -1032,6 +1064,7 @@ a {
   .about-stats {
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
 
   .stat-number {
@@ -1087,5 +1120,32 @@ a {
 
   .cta-content h2 {
     font-size: 1.6rem;
+  }
+
+  .hero-glow {
+    width: 300px;
+    height: 300px;
+  }
+
+  .intro-digital {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+
+  .intro-tk {
+    font-size: 2.4rem;
+  }
+
+  .intro-tk-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .logo-digital {
+    letter-spacing: 2px;
+  }
+
+  .cal-embed iframe {
+    height: 500px;
   }
 }
