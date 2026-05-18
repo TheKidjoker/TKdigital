@@ -280,7 +280,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // 1. Create a free account at https://www.emailjs.com
 // 2. Add an email service (connect your email provider)
 // 3. Create two email templates:
-//    - "contact_notification": sends form data to thomas@tkdigitalmedia.com
+//    - "contact_notification": sends form data to thomas@tkdigital.media
 //      Subject: "New enquiry from {{from_name}}"
 //      Body: includes {{from_name}}, {{from_email}}, {{message}}
 //    - "contact_confirmation": auto-reply to {{from_email}}
@@ -317,7 +317,7 @@ if (contactForm) {
       message: message
     };
 
-    // Send notification email to thomas@tkdigitalmedia.com, then confirmation to sender
+    // Send notification email to thomas@tkdigital.media, then confirmation to sender
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFICATION_TEMPLATE_ID, templateParams)
       .then(() => {
         return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONFIRMATION_TEMPLATE_ID, templateParams);

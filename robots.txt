@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tkdigitalmedia.com/sitemap.xml
+Sitemap: https://tkdigital.media/sitemap.xml
