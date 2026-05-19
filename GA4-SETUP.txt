@@ -1,0 +1,38 @@
+GOOGLE ANALYTICS 4 SETUP
+========================
+
+Your site has the GA4 tracking code added to index.html but it uses
+a placeholder ID (G-XXXXXXXXXX). You need to replace it with your
+real Measurement ID.
+
+STEPS:
+------
+
+1. Go to https://analytics.google.com
+2. Click "Start measuring" (or sign in if you have an account)
+3. Create an Account name (e.g. "TKDigital")
+4. Create a Property name (e.g. "TKDigital Website")
+5. Under "Data Streams", click "Web"
+6. Enter your website URL: https://tkdigital.media
+7. Enter a stream name: "TKDigital Main Site"
+8. Click "Create stream"
+9. Copy your Measurement ID — it looks like G-XXXXXXXXXX
+
+THEN:
+-----
+
+Open index.html and find these two lines (near the top of <head>):
+
+   src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+   gtag('config', 'G-XXXXXXXXXX');
+
+Replace G-XXXXXXXXXX in BOTH places with your real Measurement ID.
+
+ALSO SET UP GOOGLE SEARCH CONSOLE:
+-----------------------------------
+
+1. Go to https://search.google.com/search-console
+2. Add property: https://tkdigital.media
+3. Verify ownership (easiest: use your Google Analytics verification)
+4. Submit your sitemap: https://tkdigital.media/sitemap.xml
+5. This lets Google index your site and you can monitor search performance
