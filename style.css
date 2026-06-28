@@ -711,10 +711,49 @@ a:focus-visible {
   padding: 100px 0;
 }
 
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/* ===== Carousel ===== */
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
   gap: 24px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.carousel-track .portfolio-card {
+  min-width: calc((100% - 48px) / 3);
+  flex-shrink: 0;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gray-dark);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background: rgba(201, 169, 110, 0.5);
+}
+
+.carousel-dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201, 169, 110, 0.4);
 }
 
 .portfolio-card {
@@ -757,6 +796,14 @@ a:focus-visible {
 
 .portfolio-img.img-3 {
   background: url('portfolio-trace.png') center top / cover no-repeat;
+}
+
+.portfolio-img.img-4 {
+  background: url('portfolio-aloveforjesus.png') center top / cover no-repeat;
+}
+
+.portfolio-img.img-5 {
+  background: url('portfolio-harper.png') center top / cover no-repeat;
 }
 
 .portfolio-info {
@@ -836,6 +883,12 @@ a:focus-visible {
   border: none;
   border-radius: 12px;
   display: block;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .carousel-track .portfolio-card {
+    min-width: calc((100% - 24px) / 2);
+  }
 }
 
 @media (max-width: 768px) {
@@ -1126,8 +1179,8 @@ a:focus-visible {
     gap: 32px;
   }
 
-  .portfolio-grid {
-    grid-template-columns: 1fr;
+  .carousel-track .portfolio-card {
+    min-width: 100%;
   }
 
   .cta-content h2 {

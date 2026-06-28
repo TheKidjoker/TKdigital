@@ -227,7 +227,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Add fade-in class to animatable elements
 document.querySelectorAll(
-  '.service-card, .about-text, .about-stats, .portfolio-card, .cal-embed, .contact-form, .contact-divider, .section-title, .section-sub, .process-step, .cta-content'
+  '.service-card, .about-text, .about-stats, .carousel, .cal-embed, .contact-form, .contact-divider, .section-title, .section-sub, .process-step, .cta-content'
 ).forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
@@ -274,6 +274,103 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// ===== Portfolio carousel =====
+(function () {
+  const carousel = document.getElementById('portfolio-carousel');
+  const track = carousel.querySelector('.carousel-track');
+  const cards = track.querySelectorAll('.portfolio-card');
+  const dotsContainer = document.getElementById('carousel-dots');
+  const totalCards = cards.length;
+  let currentIndex = 0;
+  let autoplayTimer = null;
+  const AUTOPLAY_DELAY = 4000;
+
+  function getCardsPerView() {
+    if (window.innerWidth <= 768) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, totalCards - getCardsPerView());
+  }
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    const maxIndex = getMaxIndex();
+    for (let i = 0; i <= maxIndex; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('carousel-dot');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      if (i === currentIndex) dot.classList.add('active');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updatePosition() {
+    const perView = getCardsPerView();
+    const gap = 24;
+    const cardWidth = (track.offsetWidth - gap * (perView - 1)) / perView;
+    const offset = currentIndex * (cardWidth + gap);
+    track.style.transform = 'translateX(-' + offset + 'px)';
+
+    dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function goTo(index) {
+    currentIndex = Math.min(index, getMaxIndex());
+    updatePosition();
+    resetAutoplay();
+  }
+
+  function next() {
+    currentIndex = currentIndex >= getMaxIndex() ? 0 : currentIndex + 1;
+    updatePosition();
+  }
+
+  function startAutoplay() {
+    autoplayTimer = setInterval(next, AUTOPLAY_DELAY);
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    startAutoplay();
+  }
+
+  carousel.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+  carousel.addEventListener('mouseleave', startAutoplay);
+
+  // Touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    clearInterval(autoplayTimer);
+  }, { passive: true });
+  carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentIndex < getMaxIndex()) goTo(currentIndex + 1);
+      else if (diff < 0 && currentIndex > 0) goTo(currentIndex - 1);
+    }
+    startAutoplay();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
+    buildDots();
+    updatePosition();
+  });
+
+  buildDots();
+  updatePosition();
+  startAutoplay();
+})();
 
 // ===== Contact form submission (EmailJS) =====
 // Setup instructions:
