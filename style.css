@@ -823,19 +823,19 @@ a:focus-visible {
 }
 
 .portfolio-img.img-2 {
-  background: url('portfolio-jokers.png') center center / cover no-repeat;
+  background: url('portfolio-harper.png') center top / cover no-repeat;
 }
 
 .portfolio-img.img-3 {
-  background: url('portfolio-trace.png') center top / cover no-repeat;
+  background: url('portfolio-jokers.png') center center / cover no-repeat;
 }
 
 .portfolio-img.img-4 {
-  background: url('portfolio-aloveforjesus.png') center top / cover no-repeat;
+  background: url('portfolio-trace.png') center top / cover no-repeat;
 }
 
 .portfolio-img.img-5 {
-  background: url('portfolio-harper.png') center top / cover no-repeat;
+  background: url('portfolio-aloveforjesus.png') center top / cover no-repeat;
 }
 
 .portfolio-info {
