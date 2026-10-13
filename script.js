@@ -275,36 +275,108 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ===== Portfolio carousel (ported from aloveforjesus) =====
-// Native scroll-snap track with prev/next arrows that scroll one "page"
-// (the number of fully visible cards) at a time and disable at the ends.
+// ===== Portfolio coverflow (ported from the aloveforjesus video slider) =====
+// The active project sits centre-stage with its neighbours peeking in on
+// either side. Loops, auto-advances every 6s (paused on hover/focus), and
+// supports arrows, dots, swiping, and tapping a side card to bring it forward.
 (function () {
   const carousel = document.getElementById('portfolio-carousel');
   if (!carousel) return;
-  const track = carousel.querySelector('.car-track');
+  const stage = carousel.querySelector('.cf-stage');
+  const slides = Array.from(carousel.querySelectorAll('.cf-slide'));
   const prevBtn = carousel.querySelector('.car-prev');
   const nextBtn = carousel.querySelector('.car-next');
-  if (!track || !prevBtn || !nextBtn) return;
+  const dotsWrap = carousel.querySelector('.car-dots');
+  const total = slides.length;
+  if (!stage || total === 0) return;
 
-  function checkArrows() {
-    prevBtn.disabled = track.scrollLeft <= 0;
-    nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+  let current = 0;
+  let paused = false;
+
+  const dots = slides.map((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'car-dot';
+    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+    dot.addEventListener('click', () => { goTo(i); restartTimer(); });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  function positionOf(i) {
+    if (i === current) return 'center';
+    if (total > 2 && i === (current - 1 + total) % total) return 'left';
+    if (i === (current + 1) % total) return 'right';
+    return 'hidden';
   }
 
-  function scroll(dir) {
-    const item = track.querySelector('.car-item');
-    if (!item) return;
-    const gap = parseFloat(getComputedStyle(track).gap) || 24;
-    const pageWidth = item.offsetWidth + gap;
-    const visibleCount = Math.round(track.clientWidth / pageWidth);
-    track.scrollBy({ left: dir * pageWidth * Math.max(visibleCount, 1), behavior: 'smooth' });
+  function render() {
+    slides.forEach((slide, i) => {
+      const pos = positionOf(i);
+      slide.className = `cf-slide cf-${pos}`;
+      slide.setAttribute('aria-hidden', pos !== 'center');
+      const link = slide.querySelector('a');
+      if (link) link.tabIndex = pos === 'center' ? 0 : -1;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
-  prevBtn.addEventListener('click', () => scroll(-1));
-  nextBtn.addEventListener('click', () => scroll(1));
-  track.addEventListener('scroll', checkArrows, { passive: true });
-  window.addEventListener('resize', checkArrows);
-  checkArrows();
+  function goTo(i) {
+    current = (i + total) % total;
+    render();
+  }
+
+  // Tapping a peeking side card brings it to the centre instead of opening it
+  slides.forEach((slide, i) => {
+    slide.addEventListener('click', (e) => {
+      if (i !== current) {
+        e.preventDefault();
+        goTo(i);
+        restartTimer();
+      }
+    });
+  });
+
+  if (total > 1) {
+    prevBtn.addEventListener('click', () => { goTo(current - 1); restartTimer(); });
+    nextBtn.addEventListener('click', () => { goTo(current + 1); restartTimer(); });
+  } else {
+    carousel.querySelector('.cf-controls').hidden = true;
+  }
+
+  // Swipe
+  let startX = 0;
+  let startY = 0;
+  stage.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      goTo(current + (dx < 0 ? 1 : -1));
+      restartTimer();
+    }
+  }, { passive: true });
+
+  // Auto-advance
+  let timer = null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function restartTimer() {
+    clearInterval(timer);
+    if (reduceMotion || total < 2) return;
+    timer = setInterval(() => {
+      if (!paused && !document.hidden) goTo(current + 1);
+    }, 6000);
+  }
+  carousel.addEventListener('mouseenter', () => { paused = true; });
+  carousel.addEventListener('mouseleave', () => { paused = false; });
+  carousel.addEventListener('focusin', () => { paused = true; });
+  carousel.addEventListener('focusout', () => { paused = false; });
+
+  render();
+  restartTimer();
 })();
 
 // ===== Contact form submission (EmailJS) =====
